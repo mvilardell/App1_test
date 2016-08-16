@@ -31,6 +31,8 @@
 		var marcadors_nous = [];
 		var marcadors_bd = [];
 		var mapa = null;
+		var fIdMarca = null;
+		var fIdUser = null;
 		//FUNCIO PER TREURE MARCADORS DEL MAPA
 		function treure_marcadors(llista)
 		{
@@ -41,6 +43,14 @@
 				llista[i].setMap(null);
 			}
 		}
+		function interaccio(fIdUser, fIdMarca){
+			alert("click");
+			$.ajax({type: "POST",
+				url: "http://www.grupllobet.com/apptest/App1/log_interaccions.php",
+				data: ({IdUser: fIdUser, IdMarca: fIdMarca})
+			});
+		}
+
 		
 		$(document).on("ready", function(){
 			
@@ -162,8 +172,8 @@
 													icon:'../imatges/logo_grup_llobet.png',
 													titol: dades[n]
 												});
-												var fIdMarca = dades[i];
-												var fIdUser = localStorage.getItem("Id");
+												fIdMarca = dades[i];
+												fIdUser = localStorage.getItem("Id");
 												$.ajax({type: "POST",
 													url: "http://www.grupllobet.com/apptest/App1/log_marcas.php",
 													data: ({IdUser: fIdUser, IdMarca: fIdMarca})
@@ -179,15 +189,6 @@
 											
 												infowindow.open(mapa,marca);
 												
-												function interaccio(){
-													alert("click");
-													$.ajax({type: "POST",
-														url: "http://www.grupllobet.com/apptest/App1/log_interaccions.php",
-														data: ({IdUser: fIdUser, IdMarca: fIdMarca})
-													});
-												}
-
-					
 											}else{
 												var marca = new google.maps.Marker({
 													idMarcador:dades[i],
